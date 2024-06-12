@@ -1,14 +1,18 @@
 
 import './App.css'
 import Menu from './componentes/menu/Menu'
-
+import Layout from './componentes/layout/Layout'
 function App() {
 
 
 
   return (
     <>
-    <Menu></Menu>
+    <div className={'main'}>
+      <Menu></Menu>
+      <Layout></Layout>
+    </div>
+  
     </>
   )
 }
