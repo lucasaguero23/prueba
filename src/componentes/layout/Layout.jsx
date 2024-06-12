@@ -8,7 +8,7 @@ function Layout() {
   return (
     <>
     {/* HTML */}
-    <div className={"container"}>
+    <div className="conteiner">
       <input type="text"/>
     </div>
     </>
