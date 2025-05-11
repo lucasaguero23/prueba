@@ -1,19 +1,26 @@
 #!/bin/bash
 
-echo "🔐 Instalando Brave Browser de forma segura..."
+echo "🛠️ Instalando Brave Browser de forma segura en Kali..."
 
 # Paso 1: Instalar dependencias
 sudo apt update
-sudo apt install apt-transport-https curl -y
+sudo apt install -y curl apt-transport-https
 
-# Paso 2: Agregar clave GPG de Brave
-sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave.com/signing-keys/brave-browser-archive-keyring.gpg
+# Paso 2: Eliminar archivos viejos si existen
+sudo rm -f /usr/share/keyrings/brave-browser-archive-keyring.gpg
+sudo rm -f /etc/apt/sources.list.d/brave-browser-release.list
 
-# Paso 3: Agregar repositorio oficial de Brave
-echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+# Paso 3: Crear carpeta de keyrings si no existe
+sudo mkdir -p /etc/apt/keyrings
 
-# Paso 4: Actualizar repositorios e instalar Brave
+# Paso 4: Descargar clave GPG correctamente
+curl -fsSL https://brave.com/signing-keys/brave-browser-archive-keyring.gpg | sudo tee /etc/apt/keyrings/brave-browser-archive-keyring.gpg > /dev/null
+
+# Paso 5: Agregar repositorio de Brave con la clave
+echo "deb [signed-by=/etc/apt/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+
+# Paso 6: Actualizar repos e instalar Brave
 sudo apt update
-sudo apt install brave-browser -y
+sudo apt install -y brave-browser
 
 echo "✅ Brave Browser instalado correctamente. Ejecutalo con el comando: brave-browser"
