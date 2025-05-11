@@ -1,0 +1,19 @@
+#!/bin/bash
+
+echo "🔐 Instalando Brave Browser de forma segura..."
+
+# Paso 1: Instalar dependencias
+sudo apt update
+sudo apt install apt-transport-https curl -y
+
+# Paso 2: Agregar clave GPG de Brave
+sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave.com/signing-keys/brave-browser-archive-keyring.gpg
+
+# Paso 3: Agregar repositorio oficial de Brave
+echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+
+# Paso 4: Actualizar repositorios e instalar Brave
+sudo apt update
+sudo apt install brave-browser -y
+
+echo "✅ Brave Browser instalado correctamente. Ejecutalo con el comando: brave-browser"
