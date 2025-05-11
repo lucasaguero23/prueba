@@ -1,7 +1,23 @@
-wget https://github.com/brave/brave-browser/releases/latest/download/brave-browser_amd64.deb
+#!/bin/bash
 
-sudo apt install ./brave-browser_amd64.deb -y
+echo "🧹 Limpiando instalación parcial de Brave Browser en Kali..."
 
-sudo apt --fix-broken install -y
+# Paso 1: Eliminar Brave si fue instalado
+sudo apt remove --purge brave-browser -y
 
-brave-browser
+# Paso 2: Eliminar archivos de repositorio
+sudo rm -f /etc/apt/sources.list.d/brave-browser-release.list
+
+# Paso 3: Eliminar claves GPG relacionadas con Brave
+sudo rm -f /etc/apt/keyrings/brave-browser*.gpg
+sudo rm -f /usr/share/keyrings/brave-browser*.gpg
+
+# Paso 4: Eliminar paquetes huérfanos y limpiar cache
+sudo apt autoremove --purge -y
+sudo apt clean
+
+# Paso 5: Eliminar archivo .deb si está en la carpeta actual
+rm -f ~/brave-browser_amd64.deb
+rm -f ./brave-browser_amd64.deb
+
+echo "✅ Brave eliminado completamente."
